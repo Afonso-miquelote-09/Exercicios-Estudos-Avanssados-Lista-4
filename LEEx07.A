@@ -1,1 +1,69 @@
+#include <stdio.h>
 
+#define TAMANHO 20
+
+void ordenarCrescente(int vetor[], int tamanho) {
+    int i, j, temp;
+    for (i = 0; i < tamanho - 1; i++) {
+        for (j = 0; j < tamanho - i - 1; j++) {
+            if (vetor[j] > vetor[j + 1]) {
+                temp = vetor[j];
+                vetor[j] = vetor[j + 1];
+                vetor[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int pesquisaBinaria(int vetor[], int tamanho, int valor) {
+    int inicio = 0, fim = tamanho - 1, meio;
+
+    while (inicio <= fim) {
+        meio = (inicio + fim) / 2;
+        if (vetor[meio] == valor) {
+            return meio;  // Retorna o índice onde o valor foi encontrado
+        } else if (vetor[meio] < valor) {
+            inicio = meio + 1;
+        } else {
+            fim = meio - 1;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int A[TAMANHO];
+    int B[TAMANHO];
+    int i, valorPesquisado, resultado;
+
+    printf("Digite 20 números inteiros para a matriz A:\n");
+    for (i = 0; i < TAMANHO; i++) {
+        printf("A[%d]: ", i + 1);
+        scanf("%d", &A[i]);
+    }
+
+    for (i = 0; i < TAMANHO; i++) {
+        B[i] = A[i] + 2;
+    }
+
+    ordenarCrescente(B, TAMANHO);
+
+    printf("\nMatriz B (elementos de A + 2) em ordem crescente:\n");
+    for (i = 0; i < TAMANHO; i++) {
+        printf("%d ", B[i]);
+    }
+    printf("\n");
+
+    printf("\nDigite o valor que deseja pesquisar na matriz B: ");
+    scanf("%d", &valorPesquisado);
+
+    resultado = pesquisaBinaria(B, TAMANHO, valorPesquisado);
+
+    if (resultado != -1) {
+        printf("Valor %d encontrado na matriz B no índice %d.\n", valorPesquisado, resultado);
+    } else {
+        printf("Valor %d não encontrado na matriz B.\n", valorPesquisado);
+    }
+
+    return 0;
+}
